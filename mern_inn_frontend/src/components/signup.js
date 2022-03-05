@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -35,6 +35,14 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+
+  useEffect(() => {
+    if (localStorage.getItem('token'))
+    history.push('/booking-history');
+}, [])// eslint-disable-line react-hooks/exhaustive-deps
+
+
+
   const bookingContexts = useContext(bookingContext);
   const { showAlert } = bookingContexts;
   const [emailIsRepeated, setEmailIsRepeated] = useState(false)
@@ -56,7 +64,6 @@ export default function SignUp() {
     }
     );
     const json = await response.json();
-    console.log(json);
     if (json.success) {
       localStorage.setItem('token', json.authToken);
       history.push('/booking-history')

@@ -163,7 +163,6 @@ function Book() {
 
             body: JSON.stringify(bookingData)
         }).then(() => {
-            console.log("Your Holiday has been successfully booked!");
             history.push('/booking-history');
             showAlert("Congratulations, your Holiday has been successfully booked!", "success")
         });

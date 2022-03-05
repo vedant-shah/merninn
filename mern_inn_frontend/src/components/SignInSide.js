@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -33,6 +33,11 @@ function Copyright(props) {
 
 const theme = createTheme();
 export default function SignInSide() {
+
+  useEffect(() => {
+    if (localStorage.getItem('token'))
+      history.push('/booking-history');
+  }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
   const host = 'https://mern-inn.herokuapp.com'
   const bookingContexts = useContext(bookingContext);
