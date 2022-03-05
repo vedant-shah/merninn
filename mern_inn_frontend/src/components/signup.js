@@ -42,7 +42,7 @@ export default function SignUp() {
   const [isNameError, setIsNameError] = useState(false)
   const [isEmailError, setIsEmailError] = useState(false)
   const [error, setError] = useState(true)
-  const host = 'http://localhost:5000';
+  const host = 'https://mern-inn.herokuapp.com';
   let history = useHistory();
   const handleSubmit = async (event) => {
     event.preventDefault();

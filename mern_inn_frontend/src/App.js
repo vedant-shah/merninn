@@ -18,7 +18,7 @@ function App() {
   
   const [bookings, setBookings] = useState([]);
   const [alert, setAlert] = useState(null)
-  const host = 'http://localhost:5000';
+  const host = 'https://mern-inn.herokuapp.com';
   const showAlert = (message, type) => {
     setAlert({
       type:  type ,

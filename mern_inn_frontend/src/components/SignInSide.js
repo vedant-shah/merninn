@@ -34,7 +34,7 @@ function Copyright(props) {
 const theme = createTheme();
 export default function SignInSide() {
 
-  const host = 'http://localhost:5000'
+  const host = 'https://mern-inn.herokuapp.com'
   const bookingContexts = useContext(bookingContext);
   const { showAlert } = bookingContexts;
   const [isError, setIsError] = useState(false);

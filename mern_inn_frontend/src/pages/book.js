@@ -20,7 +20,7 @@ function Book() {
     const bookingContexts = useContext(bookingContext);
     const { showAlert } = bookingContexts;
     let history = useHistory();
-    const host = 'http://localhost:5000';
+    const host = 'https://mern-inn.herokuapp.com';
     const [c, setC] = useState(0);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
