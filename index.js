@@ -19,7 +19,7 @@ if (process.env.NODE_ENV == "production") {
 
 
 app.listen(port, () => {
-  console.log(`MERN INN listening at http://localhost:${port}`)
+  console.log(`MERN INN listening at https://mern-inn.herokuapp.com:${port}`)
 })
 
 
