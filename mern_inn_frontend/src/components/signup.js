@@ -56,6 +56,7 @@ export default function SignUp() {
     }
     );
     const json = await response.json();
+    console.log(json);
     if (json.success) {
       localStorage.setItem('token', json.authtoken);
       history.push('/booking-history')
