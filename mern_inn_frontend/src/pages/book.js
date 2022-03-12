@@ -184,7 +184,7 @@ function Book() {
 
 
             <TextField name="phone" required className='my-2 mx-auto' label="Phone" variant="outlined" style={{ "minWidth": "70%" }} value={phone} error={isPhoneError} helperText={isPhoneError ? phoneErrorMessage : ""} onChange={(event) => {
-                setPhone(event.target.value);
+                setPhone(parseInt(event.target.value));
                 isPhoneValid(event.target.value);
 
             }}
@@ -210,7 +210,7 @@ function Book() {
             </TextField>
 
             <TextField name="rooms" className='mx-auto' required label="No. of Rooms" variant="outlined" style={{ "minWidth": "70%" }} value={room} error={isRoomError} helperText={isRoomError ? roomErrorMessage : ""} onChange={(event) => {
-                setRoom(event.target.value)
+                setRoom(parseInt(event.target.value))
                 isRoomValid(event.target.value);
                 setTotal(bookingData.rooms * 1000 * bookingData.days)
             }}
