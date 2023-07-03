@@ -10,8 +10,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-import { useHistory } from 'react-router-dom';
-import bookingContext from '../context/bookings/BookingContext';
+import { useHistory } from "react-router-dom";
+import bookingContext from "../context/bookings/BookingContext";
 
 function Copyright(props) {
   return (
@@ -19,8 +19,7 @@ function Copyright(props) {
       variant="body2"
       color="text.secondary"
       align="center"
-      {...props}
-    >
+      {...props}>
       {"Copyright © "}
       <Link color="inherit" to="/">
         MERN Inn.
@@ -33,57 +32,51 @@ function Copyright(props) {
 
 const theme = createTheme();
 export default function SignInSide() {
-
   useEffect(() => {
-    if (localStorage.getItem('token'))
-      history.push('/booking-history');
-  }, [])// eslint-disable-line react-hooks/exhaustive-deps
+    if (localStorage.getItem("token")) history.push("/booking-history");
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const host = 'https://mern-inn.herokuapp.com'
+  const host = "http://localhost:5000";
   const bookingContexts = useContext(bookingContext);
   const { showAlert } = bookingContexts;
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [credentials, setCredentials] = useState({ email: "", password: "" })
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
   let history = useHistory();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await fetch(`${host}/api/auth/login`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
 
-      body: JSON.stringify(credentials)
-    }
-    );
+      body: JSON.stringify(credentials),
+    });
     const json = await response.json();
     if (json.success) {
-      localStorage.setItem('token', json.authToken);
-      history.push('/booking-history');
-      showAlert("Logged In Successfully", "success")
-    }
-    else {
+      localStorage.setItem("token", json.authToken);
+      history.push("/booking-history");
+      showAlert("Logged In Successfully", "success");
+    } else {
       setF(false);
-      setCredentials({ email: "", password: '' })
+      setCredentials({ email: "", password: "" });
       setTimeout(() => {
         setF(true);
       }, 2000);
     }
-
   };
 
   const handleChange = (item) => {
-    setCredentials({ ...credentials, [item.target.name]: item.target.value })
-    if (item.target.name === '') {
+    setCredentials({ ...credentials, [item.target.name]: item.target.value });
+    if (item.target.name === "") {
       setIsError(true);
-      setErrorMessage(`${item.target.name} can not be empty`)
+      setErrorMessage(`${item.target.name} can not be empty`);
+    } else {
+      setIsError(false);
     }
-    else {
-      setIsError(false)
-    }
-  }
-  const [f, setF] = useState(true)
+  };
+  const [f, setF] = useState(true);
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -112,8 +105,7 @@ export default function SignInSide() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-            }}
-          >
+            }}>
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
@@ -124,14 +116,13 @@ export default function SignInSide() {
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
+              sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 error={isError}
-                helperText={isError ? errorMessage : ''}
+                helperText={isError ? errorMessage : ""}
                 value={credentials.email}
                 onChange={handleChange}
                 id="email"
@@ -148,25 +139,30 @@ export default function SignInSide() {
                 fullWidth
                 name="password"
                 error={isError}
-                helperText={isError ? errorMessage : ''}
+                helperText={isError ? errorMessage : ""}
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
               />
-              <p style={{ display: !f ? 'inline-block' : 'none', color: 'red', fontSize: '0.8rem' }}>Email or Password are incorrect, try again.</p>
+              <p
+                style={{
+                  display: !f ? "inline-block" : "none",
+                  color: "red",
+                  fontSize: "0.8rem",
+                }}>
+                Email or Password are incorrect, try again.
+              </p>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
+                sx={{ mt: 3, mb: 2 }}>
                 Sign In
               </Button>
               <Grid container>
-
                 <Grid item className="mx-auto">
-                  <Link to="/signup" variant="body2" >
+                  <Link to="/signup" variant="body2">
                     Don't have an account? Sign-up now.
                   </Link>
                 </Grid>

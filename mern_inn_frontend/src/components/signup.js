@@ -10,9 +10,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-import { useHistory } from 'react-router-dom';
-import bookingContext from '../context/bookings/BookingContext';
-
+import { useHistory } from "react-router-dom";
+import bookingContext from "../context/bookings/BookingContext";
 
 function Copyright(props) {
   return (
@@ -20,8 +19,7 @@ function Copyright(props) {
       variant="body2"
       color="text.secondary"
       align="center"
-      {...props}
-    >
+      {...props}>
       {"Copyright © "}
       <Link color="inherit" to="/">
         MERN Inn.
@@ -35,97 +33,87 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-
   useEffect(() => {
-    if (localStorage.getItem('token'))
-    history.push('/booking-history');
-}, [])// eslint-disable-line react-hooks/exhaustive-deps
-
-
+    if (localStorage.getItem("token")) history.push("/booking-history");
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const bookingContexts = useContext(bookingContext);
   const { showAlert } = bookingContexts;
-  const [emailIsRepeated, setEmailIsRepeated] = useState(false)
-  const [isPassError, setIsPassError] = useState(false)
-  const [isNameError, setIsNameError] = useState(false)
-  const [isEmailError, setIsEmailError] = useState(false)
-  const [error, setError] = useState(true)
-  const host = 'https://mern-inn.herokuapp.com';
+  const [emailIsRepeated, setEmailIsRepeated] = useState(false);
+  const [isPassError, setIsPassError] = useState(false);
+  const [isNameError, setIsNameError] = useState(false);
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [error, setError] = useState(true);
+  const host = "http://localhost:5000";
   let history = useHistory();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await fetch(`${host}/api/auth/createuser`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
 
-      body: JSON.stringify(credentials)
-    }
-    );
+      body: JSON.stringify(credentials),
+    });
     const json = await response.json();
     if (json.success) {
-      localStorage.setItem('token', json.authToken);
-      history.push('/booking-history')
-      showAlert("Account Created Successfully", "success")
-    }
-    else {
-      if (json.error === 'Email already exists') {
+      localStorage.setItem("token", json.authToken);
+      history.push("/booking-history");
+      showAlert("Account Created Successfully", "success");
+    } else {
+      if (json.error === "Email already exists") {
         setEmailIsRepeated(true);
         setTimeout(() => {
-          setCredentials({ name: credentials.name, email: "", password: credentials.password })
-          setIsEmailError(true)
+          setCredentials({
+            name: credentials.name,
+            email: "",
+            password: credentials.password,
+          });
+          setIsEmailError(true);
           setEmailIsRepeated(false);
         }, 1500);
       }
     }
-
   };
 
-
-
-  const [credentials, setCredentials] = useState({ name: '', email: '', password: '' })
+  const [credentials, setCredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const handleChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value })
-    if (e.target.name === 'password' && e.target.value.length < 5) {
-      setIsPassError(true)
-      setError(true)
-    }
-    else if (e.target.name === 'password' && e.target.value.length >= 5) {
-      setIsPassError(false)
-    }
-    else if (e.target.name === 'name' && e.target.value.length - 1 < 1) {
-      setIsNameError(true)
-      setError(true)
-
-    }
-    else if (e.target.name === 'name' && e.target.value.length >= 2) {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    if (e.target.name === "password" && e.target.value.length < 5) {
+      setIsPassError(true);
+      setError(true);
+    } else if (e.target.name === "password" && e.target.value.length >= 5) {
+      setIsPassError(false);
+    } else if (e.target.name === "name" && e.target.value.length - 1 < 1) {
+      setIsNameError(true);
+      setError(true);
+    } else if (e.target.name === "name" && e.target.value.length >= 2) {
       setIsNameError(false);
-    }
-    else if (e.target.name === 'email' && e.target.value.length === 0) {
-      setIsEmailError(true)
-      setError(true)
-
-    }
-    else if (e.target.name === 'email' && e.target.value.length !== 0) {
+    } else if (e.target.name === "email" && e.target.value.length === 0) {
+      setIsEmailError(true);
+      setError(true);
+    } else if (e.target.name === "email" && e.target.value.length !== 0) {
       if (e.target.value.match(/.+@.+\..+/)) {
-        setIsEmailError(false)
-
-      }
-      else {
-        setIsEmailError(true)
-        setError(true)
-
+        setIsEmailError(false);
+      } else {
+        setIsEmailError(true);
+        setError(true);
       }
     }
     if (!isNameError && !isEmailError && !isPassError) {
-      if (credentials.name !== '' && credentials.email !== '' && credentials.password !== '')
-        setError(false)
-    }
-    else
-      setError(true)
-
-  }
+      if (
+        credentials.name !== "" &&
+        credentials.email !== "" &&
+        credentials.password !== ""
+      )
+        setError(false);
+    } else setError(true);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -136,8 +124,7 @@ export default function SignUp() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}
-        >
+          }}>
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -148,8 +135,7 @@ export default function SignUp() {
             component="form"
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+            sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12}>
                 <TextField
@@ -178,8 +164,24 @@ export default function SignUp() {
                   value={credentials.email}
                   autoComplete="email"
                 />
-                <p style={{ display: isEmailError ? 'inline-block' : 'none', color: 'red', fontSize: '0.8rem', margin: '0' }}>Invalid Email.</p>
-                <p style={{ display: emailIsRepeated ? 'inline-block' : 'none', color: 'red', fontSize: '0.8rem', margin: '0' }}>This email already exists.</p>
+                <p
+                  style={{
+                    display: isEmailError ? "inline-block" : "none",
+                    color: "red",
+                    fontSize: "0.8rem",
+                    margin: "0",
+                  }}>
+                  Invalid Email.
+                </p>
+                <p
+                  style={{
+                    display: emailIsRepeated ? "inline-block" : "none",
+                    color: "red",
+                    fontSize: "0.8rem",
+                    margin: "0",
+                  }}>
+                  This email already exists.
+                </p>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -194,7 +196,15 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                 />
-                <p style={{ display: isPassError ? 'inline-block' : 'none', color: 'red', fontSize: '0.8rem', margin: '0' }}>Password must be atleast 6 characters.</p>
+                <p
+                  style={{
+                    display: isPassError ? "inline-block" : "none",
+                    color: "red",
+                    fontSize: "0.8rem",
+                    margin: "0",
+                  }}>
+                  Password must be atleast 6 characters.
+                </p>
               </Grid>
             </Grid>
             <Button
@@ -202,8 +212,7 @@ export default function SignUp() {
               fullWidth
               disabled={error}
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+              sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
             <Grid container justifyContent="center">

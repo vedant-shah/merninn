@@ -15,40 +15,40 @@ import bookingContext from "./context/bookings/BookingContext";
 import Alert from "./components/Alerts";
 
 function App() {
-  
   const [bookings, setBookings] = useState([]);
-  const [alert, setAlert] = useState(null)
-  const host = 'https://mern-inn.herokuapp.com';
+  const [alert, setAlert] = useState(null);
+  const host = "http://localhost:5000";
   const showAlert = (message, type) => {
     setAlert({
-      type:  type ,
-      message: message
-    }
-    )
+      type: type,
+      message: message,
+    });
     setTimeout(() => {
-      setAlert(null)
+      setAlert(null);
     }, 1500);
-  }
+  };
   async function getBookingHistory() {
     await fetch(`${host}/api/bookings/fetchallbookings`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        "auth-token": localStorage.getItem('token')
-      }
-    }).then((response) => {
-      return response.json();
-    }
-    ).then((data) => {
-      setBookings(data)
-    });
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setBookings(data);
+      });
   }
   return (
     <>
-      <bookingContext.Provider value={{ bookings, setBookings, getBookingHistory, showAlert }}>
+      <bookingContext.Provider
+        value={{ bookings, setBookings, getBookingHistory, showAlert }}>
         <Router>
           <Navbar />
-          <Alert alert={alert}/>
+          <Alert alert={alert} />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route exact path="/aboutus" component={AboutUs} />
